@@ -1,0 +1,54 @@
+//
+// components.scss
+//
+
+// Card
+.card {
+    @apply shadow rounded border border-gray-100 bg-white;
+}
+
+.card-body {
+    @apply py-10 px-11;
+}
+
+// Button
+.btn {
+    @apply inline-block px-5 py-2.5 rounded text-sm cursor-pointer select-none outline-none transition-all duration-500 focus:outline-none focus:ring-0 focus:ring-offset-0 hover:-translate-y-1.5;
+}
+
+// Dropdown Menu
+.dropdown {
+    @apply relative;
+}
+
+.dropdown-menu {
+    @apply static lg:absolute lg:bg-white bg-transparent lg:shadow-lg shadow-none rounded z-20 w-40 lg:py-2 py-0 hidden;
+    animation-name: DropDownSlide;
+    animation-duration: 0.4s;
+    animation-fill-mode: both;
+}
+
+@keyframes DropDownSlide {
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+.dropdown-menu.show {
+    @apply block;
+}
+
+.dropdown-item {
+    @apply block px-4 py-3 text-sm lg:text-gray-500 text-gray-400 capitalize transition-colors duration-200 transform lg:hover:bg-gray-100 hover:bg-transparent;
+}
+
+@media (min-width: 992px) {
+    .dropdown:hover > .dropdown-menu {
+        @apply block;
+    }
+}

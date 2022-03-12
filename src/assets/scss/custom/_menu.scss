@@ -1,0 +1,26 @@
+//
+// Menu.scss
+//
+
+// Navbar Menu
+.navbar-custom .navbar-nav .active {
+    .nav-item {
+        @apply text-white;
+    }
+}
+
+.navbar-custom.is-sticky {
+    @apply bg-zinc-800 lg:py-3 shadow-sm shadow-black;
+}
+
+.navbar-custom {
+    @apply lg:py-4 py-3 bg-gray-800 xl:bg-transparent border-gray-200 fixed top-0 left-0 right-0 z-50 transition-all ease-in-out duration-500;
+
+    .navbar-nav {
+        @apply flex flex-col mt-4 lg:flex-row lg:space-x-4 lg:mt-0 lg:text-[15px];
+
+        .nav-item {
+            @apply text-gray-400 block p-3 border-gray-100 hover:text-white lg:hover:bg-transparent lg:border-0  xl:px-3;
+        }
+    }
+}
