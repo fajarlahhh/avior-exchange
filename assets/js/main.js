@@ -4,21 +4,29 @@ var usdtPrice = 0
 var usdtNeed = 0
 var adminAddress = "0x0248103E69C2d84DE296581035933Db137DA1a38"
 var userAddress
+var txtAviorAmount
 
 const serverUrl = "https://ycgczemrdobt.usemoralis.com:2053/server";
 const appId = "vZqW8n6mFszQbzKMRB6iy3lTJMwO743Z7GRLScNd";
 Moralis.start({ serverUrl, appId });
 
-btnLogin = document.getElementById("btn-login")
-btnLogout = document.getElementById("btn-logout")
-btnAddToMetamask = document.getElementById("btn-add-to-metamask")
-btnSubmitMetamask = document.getElementById("btn-form-metamask")
+const btnLogin = document.getElementById("btn-login")
+const btnLogout = document.getElementById("btn-logout")
+const btnAddToMetamask = document.getElementById("btn-add-to-metamask")
+const btnSubmitMetamask = document.getElementById("btn-form-metamask")
 
-txtAviorAmount = document.getElementById("txt-avior-amount")
-txtMetamaskAddress = document.getElementById("txt-metamask-address")
-formMetamask = document.getElementById("form-metamask")
-formManual = document.getElementsByClassName("form-manual")
-txtResult = document.getElementById("txt-result")
+const txtMetamaskAddress = document.getElementById("txt-metamask-address")
+const formMetamask = document.getElementsByClassName("form-metamask")
+const formManual = document.getElementsByClassName("form-manual")
+const lblResult = document.getElementById("lbl-result")
+const lblAdminAddress = document.getElementById("lbl-admin-address")
+
+const lblUsdt = document.getElementsByClassName("lbl-usdt")
+
+async function copy(elmnt) {
+  await navigator.clipboard.writeText(adminAddress);
+  alert("Copied the text: " + adminAddress);
+}
 
 function checkLogin() {
   if (Moralis.User.current()) {
@@ -29,10 +37,13 @@ function checkLogin() {
     {
       formManual[i].classList.add('hidden')
     }
-    formMetamask.classList.remove('hidden')
+    for(var i = 0; i < formMetamask.length; i++)
+    {
+      formMetamask[i].classList.remove('hidden')
+    }
     
     btnSubmitMetamask.onclick = sendUsd
-    txtAviorAmount.onkeyup = setUsdt
+    txtAviorAmount = document.getElementById("txt-avior-amount-metamask")
     btnLogout.onclick = logOut
   } else {
     btnAddToMetamask.classList.add('hidden')
@@ -42,12 +53,16 @@ function checkLogin() {
     {
       formManual[i].classList.remove('hidden')
     }
-    formMetamask.classList.add('hidden')
+    for(var i = 0; i < formMetamask.length; i++)
+    {
+      formMetamask[i].classList.add('hidden')
+    }
 
     btnSubmitMetamask.onclick = null
-    txtAviorAmount.onkeyup = null
+    txtAviorAmount = document.getElementById("txt-avior-amount-manual")
     btnLogout.onclick = null
   }
+  txtAviorAmount.onkeyup = setUsdt
 }
 
 window.addEventListener('DOMContentLoaded', (e) => {
@@ -58,9 +73,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
   }
 
   checkLogin()
-  document.getElementById("txt-admin-address").innerText = adminAddress
+  lblAdminAddress.innerText = adminAddress
   getPrice()
-  document.getElementById("txt-welcome").innerText = "AVIOR TOKEN IS AVAILABLE $ " + aviorPrice
+  document.getElementById("txt-welcome").innerText = "AVIOR = $ " + aviorPrice
 })
 
 Moralis.onAccountChanged( async (account) => {
@@ -90,9 +105,14 @@ async function login() {
 }
 
 function setUsdt() {
-  usdtNeed = (txtAviorAmount.value?txtAviorAmount.value:0) * aviorPrice/usdtPrice
-  document.getElementById("txt-usdt").innerText = usdtNeed
-  txtResult.innerHTML = ''
+  usdtNeed = ((txtAviorAmount.value?txtAviorAmount.value:0) * aviorPrice/usdtPrice).toFixed(5)
+
+  for(var i = 0; i < lblUsdt.length; i++)
+  {
+    lblUsdt[i].innerText = usdtNeed
+  }
+  
+  lblResult.innerHTML = ''
 }
 
 async function addToMetamask(){
@@ -128,13 +148,14 @@ async function getPrice(){
   };
   const price = await Moralis.Web3API.token.getTokenPrice(options);
   usdtPrice = price.usdPrice
-  document.getElementById("txt-avior-price").innerHTML =  + aviorPrice/usdtPrice + " <small class='text-orange-500'>USD (BEP-20)</small>"
+  document.getElementById("txt-avior-price").innerHTML =  (aviorPrice/usdtPrice).toFixed(5  )
 }
 
 async function sendUsd(){
   if (usdtNeed > 0) {
-    formMetamask.classList.add('hidden')
-    document.getElementById("txt-result").innerText = "Do not leave this tab until the transaction is complete!!!"
+    txtAviorAmount.classList.add('hidden')
+    btnSubmitMetamask.classList.add('hidden')
+    lblResult.innerText = "Do not leave this tab until the transaction is complete!!!"
     window.onbeforeunload = function() {
         return "Do not leave this tab until the transaction is complete";
     }
@@ -150,18 +171,19 @@ async function sendUsd(){
       const result = await transaction.wait();
       if (result) {
         console.log(result)
-        txtResult.innerHTML = result.transactionHash
+        lblResult.innerHTML = result.transactionHash
       }
     }
     catch(e) {
       console.log(e)
-      formMetamask.classList.remove('hidden')
       var message = ''
       if (e.code === 4001){
         message = '(User rejected the transaction)'
       }
-      txtResult.innerHTML = 'Transaction failed. ' + message
+      lblResult.innerHTML = 'Transaction failed. ' + message
     }
+    txtAviorAmount.classList.remove('hidden')
+    btnSubmitMetamask.classList.remove('hidden')
     window.onbeforeunload = null
   }
 }
