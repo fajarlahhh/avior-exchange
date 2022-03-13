@@ -1,9 +1,11 @@
-const http = require('http')
-const fs = require('fs')
+const express = require('express');
+const app = express(); 
+const path = require('path')
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'content-type': 'text/html' })
-  fs.createReadStream('index.html').pipe(res)
-})
+app.use(express.static(path.join(__dirname, 'public')));
 
-server.listen(80)
+app.get('/', (req, res) => {
+    res.sendFile('index.html', {root: __dirname}); 
+});
+
+app.listen(80);

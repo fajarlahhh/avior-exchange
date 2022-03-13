@@ -14,7 +14,7 @@
     },
     "devDependencies": {
         "autoprefixer": "^10.2.5",
-        "browser-sync": "^2.26.14",
+        "browser-sync": "^2.27.7",
         "del": "^6.0.0",
         "gulp": "^4.0.2",
         "gulp-cached": "1.1.1",
@@ -33,6 +33,10 @@
     },
     "dependencies": {
         "@tailwindcss/forms": "^0.4.0",
+        "express": "^4.17.3",
+        "fs": "^0.0.1-security",
+        "http": "^0.0.1-security",
+        "path": "^0.12.7",
         "postcss": "^8.4.5",
         "tailwindcss": "^3.0.17"
     }
