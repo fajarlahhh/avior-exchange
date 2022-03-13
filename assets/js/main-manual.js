@@ -14,8 +14,6 @@ const btnLogin = document.getElementById("btn-login")
 const btnLogout = document.getElementById("btn-logout")
 const btnAddToMetamask = document.getElementById("btn-add-to-metamask")
 const btnSubmitMetamask = document.getElementById("btn-form-metamask")
-const btnSubmitManual = document.getElementById("btn-form-manual")
-const btnConfirmation = document.getElementById("btn-confirmation")
 
 const txtMetamaskAddress = document.getElementById("txt-metamask-address")
 const formMetamask = document.getElementsByClassName("form-metamask")
@@ -47,8 +45,6 @@ function checkLogin() {
     btnSubmitMetamask.onclick = sendUsd
     txtAviorAmount = document.getElementById("txt-avior-amount-metamask")
     btnLogout.onclick = logOut
-    btnSubmitManual.onclick = null
-    btnConfirmation.onclick = null
   } else {
     btnAddToMetamask.classList.add('hidden')
     btnLogout.classList.add('hidden')
@@ -65,8 +61,6 @@ function checkLogin() {
     btnSubmitMetamask.onclick = null
     txtAviorAmount = document.getElementById("txt-avior-amount-manual")
     btnLogout.onclick = null
-    btnSubmitManual.onclick = submitManual
-    btnConfirmation.onclick = submitConfirmation
   }
   txtAviorAmount.onkeyup = setUsdt
 }
@@ -83,18 +77,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
   getPrice()
   document.getElementById("txt-welcome").innerText = "AVIOR = $ " + aviorPrice
 })
-
-function submitManual() {
-  document.getElementById("form-manual-input").classList.add("hidden")
-  document.getElementById("form-confirmation").classList.remove("hidden")
-}
-
-function submitConfirmation() {
-  const avior = txtAviorAmount.value
-  const address = document.getElementById("txt-user-address").value
-  const hash = document.getElementById("txt-tx-id").value
-  const usd = usdtNeed
-}
 
 Moralis.onAccountChanged( async (account) => {
   const confirmed = confirm("Link this address to your account?");

@@ -4,7 +4,7 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>Dorsin - Tailwindcss Landing Page Template</title>
+        <title>AVIOR - Exchange</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Premium Tailwindcss Landing Page Template, Tailwindcss v3.0" />
         <meta name="keywords" content="Tailwindcss v3.0, premium, marketing, multipurpose" />
@@ -55,10 +55,6 @@
                             </li>
                             <li>
                                 <a data-scroll href="#exchange" class="nav-item">Exchange</a>
-                            </li>
-                            <li>
-                                <a data-scroll href="#contact" class="nav-item">Contact</a>
-                            </li>
                         </ul>
                     </div>
 
@@ -103,11 +99,11 @@
 
 
         <section id="exchange">
-            <div class="container hidden" id="form-metamask">
+            <div class="container hidden form-metamask">
                 <div class="flex justify-center">
                     <div class="lg:w-2/3 space-y-5 text-center">
                         <!-- Section Title -->
-                        <h1 class="text-2xl uppercase tracking-widest">Exchange Using Metamask</h1>
+                        <h1 class="text-2xl uppercase tracking-widest">Exchange</h1>
                         <div class="h-0.5 bg-yellow-500 w-14 mx-auto"></div>
                     </div>
                 </div>
@@ -117,7 +113,7 @@
                     <div class="card text-center transform transition ease-in-out duration-300 hover:-translate-y-6 mb-6">
                         <div class="card-body">
                             <div class="space-y-2">
-                                <h1 class="uppercase text-sm">Avior to USD (BEP-20)</h1>
+                                <h1 class="uppercase text-sm">USD (BEP-20) to Avior</h1>
                                 <h1 class="text-4xl" id="txt-avior-price"></h1>
                                 <h1 class="uppercase text-gray-400 text-xs">Need 1 x 24 hours verification</h1>
                             </div>
@@ -140,7 +136,7 @@
             </div>
             <div class="container form-manual">
                 <div class="grid grid-cols-1 lg:grid-cols-1 items-center gap-7">
-                    <div class="space-y-6">
+                    <div class="space-y-6" id="form-manual-input">
                         <h5>Exchange USD (BEP-20) to AVIOR
                         </h5>
                         <ol class="text-gray-400 list-disc list-outside space-y-3 text-sm ml-5 marker:text-yellow-500 marker:text-lg">
@@ -150,15 +146,18 @@
                                 <br>
                                 <input type="number" id="txt-avior-amount-manual" step="1" class="border border-gray-300 text-gray-900 text-sm rounded focus:ring-0 focus:border-gray-400 block w-full">
                             </li>
-                            <li>Copy this admin wallet address below:<br><small onclick="copy()" id="lbl-admin-address" class="text-red-500" style="font-size: 0.6rem !important">0x0248103E69C2d84DE296581035933Db137DA1a38</small></li>
-                            <li>You have to transfer <span class="text-green-500 font-medium lbl-usdt">0.00000</span> USDT (BEP20)</li>
-                            <li>Then you need to fill this form below : </li>
+                            <li>Click the button bellow to submit your request</li>
+                            <a href="javascript:;" id="btn-form-manual" class="btn bg-purple-500 text-white mt-10">Submit</a>
                         </ol>
-                        <hr>
+                    </div>
+                    <div class="space-y-6 hidden" id="form-confirmation">
                         <h5 class="text-center">Confirmation Form</h5>
-                        
+                        <br>
+                        <small>Send <span class="text-green-500 font-medium lbl-usdt">0.00000</span> USDT (BEP20) to this address : <br><small onclick="copy()" id="lbl-admin-address" class="text-red-500" style="font-size: 0.6rem !important">0x0248103E69C2d84DE296581035933Db137DA1a38</small><br>
+                        Fill in the input below :</small>
                         <input type="text" id="txt-user-address" step="1" class="border border-gray-300 text-gray-900 text-sm rounded focus:ring-0 focus:border-gray-400 block w-full" placeholder="Your BSC Wallet Address">
                         <input type="text" id="txt-tx-id" step="1" class="border border-gray-300 text-gray-900 text-sm rounded focus:ring-0 focus:border-gray-400 block w-full" placeholder="Insert Block Hash ID">
+                        <a href="javascript:;" id="btn-confirmation" class="btn bg-green-500 text-white mt-10">Confirm Now</a>
                     </div>
                 </div>
             </div>
@@ -170,35 +169,25 @@
                 <div class="grid lg:grid-cols-3 items-center gap-6">
                     <!-- Social Account Link -->
                     <div class="space-x-3">
-                        <a href=""
+                        <a href="http://t.me/aviortokengroup"
                             class="border-2 border-gray-400 w-12 h-12 text-xl rounded-full inline-flex text-center items-center text-gray-400 hover:text-yellow-500">
-                            <i class="mdi mdi-facebook m-auto"></i>
+                            <i class="mdi mdi-account-group m-auto"></i>
                         </a>
-                        <a href=""
+                        <a href="http://www.twitter.com/avior_token "
                             class="border-2 border-gray-400 w-12 h-12 text-xl rounded-full inline-flex text-center items-center text-gray-400 hover:text-yellow-500">
                             <i class="mdi mdi-twitter m-auto"></i>
-                        </a>
-                        <a href=""
-                            class="border-2 border-gray-400 w-12 h-12 text-xl rounded-full inline-flex text-center items-center text-gray-400 hover:text-yellow-500">
-                            <i class="mdi mdi-linkedin m-auto"></i>
-                        </a>
-                        <a href=""
-                            class="border-2 border-gray-400 w-12 h-12 text-xl rounded-full inline-flex text-center items-center text-gray-400 hover:text-yellow-500">
-                            <i class="mdi mdi-google-plus m-auto"></i>
                         </a>
                     </div>
 
                     <!-- Contect Number -->
                     <div class="lg:text-center">
-                        <h1 class="text-lg">
-                            <a href="tel:+1123XXXXX0"><i class="pe-7s-call text-black align-middle text-[22px] mr-2"></i>+1 123 456 7890</a>
-                        </h1>
+                        &nbsp;
                     </div>
 
                     <!-- Contect Mail -->
                     <div class="lg:text-right">
                         <h1 class="text-lg">
-                            <a href="mailto:abc@example.com"><i class="pe-7s-mail-open text-black align-middle text-[22px] mr-2"></i>abc@example.com</a>
+                            <a href="mailto:support@aviortoken.com"><i class="pe-7s-mail-open text-black align-middle text-[22px] mr-2"></i>support@aviortoken.com</a>
                         </h1>
                     </div>
                 </div>
@@ -213,71 +202,15 @@
         <!-- Contact us Start -->
 
 
-        <!-- Footer Start -->
-        <section class="bg-gray-900">
-            <div class="container">
-                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    <div class="lg:col-span-3">
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                            <div class="col-span-2">
-                                <!-- Logo -->
-                                <h1 class="text-lg uppercase text-white font-medium mb-6">Dorsin</h1>
-
-                                <p class="text-gray-400">Sed ut perspiciatis unde omnis iste natus error sit voluptatem</p>
-                            </div>
-
-                            <div>
-                                <div class="text-lg text-white font-medium mb-6">Information</div>
-                                <!-- Footer Link -->
-                                <ul class="space-y-2 text-sm">
-                                    <li><a href="index.html" class="text-gray-400 hover:text-gray-300">Home</a></li>
-                                    <li><a href="page-about.html" class="text-gray-400 hover:text-gray-300">About us</a></li>
-                                    <li><a href="page-contact.html" class="text-gray-400 hover:text-gray-300">Contact us</a></li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <div class="text-lg text-white font-medium mb-6">Community</div>
-                                <!-- Footer Link -->
-                                <ul class="space-y-2 text-sm">
-                                    <li><a href="page-faq.html" class="text-gray-400 hover:text-gray-300">FAQ</a></li>
-                                    <li><a href="login.html" class="text-gray-400 hover:text-gray-300">Login</a></li>
-                                    <li><a href="signup.html" class="text-gray-400 hover:text-gray-300">Sign Up</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="text-lg text-white mb-6">Subscribe</div>
-                        <div class="text-gray-400 text-sm mb-5">In an ideal world this text wouldn’t exist, a client would
-                            acknowledge the importance of having web copy before the design starts.
-                        </div>
-
-                        <div class="flex bg-gray-800 rounded-lg items-center pr-4">
-                            <!-- Subscribe form -->
-                            <input type="email" class="border-0 focus:border-0 focus:ring-0 text-gray-50 bg-transparent w-full" placeholder="Email" />
-                            <button type="submit" class="text-xl text-gray-400">
-                                <i class="pe-7s-paper-plane"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <footer class="bg-gray-800 py-5">
             <div class="container">
                 <div class="grid grid-cols-1 lg:grid-cols-3 items-center gap-6">
                     <div class="col-span-2">
                         <div class="text-sm text-gray-400">
-                            <script>document.write(new Date().getFullYear()) </script>&copy; Dorsin - <a href="">Themesbrand</a>
+                            <script>document.write(new Date().getFullYear()) </script>&copy; Avior 
                         </div>
                     </div>
 
-                    <div class="ml-auto">
-                        <img src="assets/images/payment.png" alt="payment-img" class="h-9">
-                    </div>
                 </div>
             </div>
         </footer>
@@ -289,8 +222,10 @@
         <script src="assets/js/gumshoe.polyfills.min.js"></script>
 
         
-        <!-- Modal Javascript -->
-        <script src="assets/js/modal.js"></script>
+        <!--Partical js-->
+        <script src="assets/js/particles.js"></script>
+
+        <script src="assets/js/particles.app.js"></script>
 
         <!-- Custom Javascript -->
         <script src="assets/js/app.js"></script>
