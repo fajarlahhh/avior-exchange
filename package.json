@@ -36,6 +36,7 @@
         "express": "^4.17.3",
         "fs": "^0.0.1-security",
         "http": "^0.0.1-security",
+        "openssl": "^2.0.0",
         "path": "^0.12.7",
         "postcss": "^8.4.5",
         "tailwindcss": "^3.0.17"

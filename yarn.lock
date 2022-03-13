@@ -3698,6 +3698,11 @@
   dependencies:
     "wrappy" "1"
 
+"openssl@^2.0.0":
+  "integrity" "sha512-0FgKhQ/e+XCtTTgn3qZO2g3y+Y3FC/LGvt77oObmMR4ZkZvsV1CuG/mMZClZgZqVKr0+tkemP+I3Uub4WXkHYw=="
+  "resolved" "https://registry.npmjs.org/openssl/-/openssl-2.0.0.tgz"
+  "version" "2.0.0"
+
 "openurl@1.1.1":
   "integrity" "sha1-OHW0sO96UsFW8NtB1GCduw+Us4c="
   "resolved" "https://registry.npmjs.org/openurl/-/openurl-1.1.1.tgz"
