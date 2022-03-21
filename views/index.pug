@@ -1,0 +1,52 @@
+html
+    head
+        title= 'AVIOR - Exchange'
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='description', content='Avior Swap')
+        meta(name='author', content='John Kennedy')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(http-equiv='Content-Security-Policy', content="default-src *; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com/; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net/")   
+        link(rel="stylesheet", href="css/tailwind.css")
+        link(rel="stylesheet", href="css/icons.css")
+    body
+        div(class="navbar-custom is-sticky", id="navbar")
+            nav
+                div(class="lg:container flex flex-wrap items-center")
+                    a(href="/", class="flex lg:ml-0 ml-8") 
+                        span(class="self-center text-xl font-poppins font-bold tracking-widest whitespace-nowrap uppercase text-white") Avior
+                    div(class="flex items-center lg:order-2 ml-auto lg:mr-0 mr-8")
+                        button(id="btn-disconnect", class="btn bg-red-500 text-white rounded-full translate-y-0 hidden") Disconnect
+        section(id="exchange", class="mt-5")
+            div(class="container")
+                div(class="flex justify-center")
+                    div(class="lg:w-2/3 space-y-5 text-center")
+                        h1(class="text-2xl uppercase tracking-widest") Get Avior
+                        div(class="h-0.5 bg-yellow-500 w-14 mx-auto")
+                div(class="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-8 text-center")
+                    div(class="card transform text-center transition ease-in-out duration-300 hover:-translate-y-6 mb-6")
+                        div(class="card-body")
+                            form(action="/send", method="post", class="hidden", id="form-send")
+                                div(class="space-y-2")
+                                    h4(class="text-gray-400") 1 Avior = 
+                                        label(id="lbl-usdt-price") USDT
+                                    h1(class="text-sm") How many aviors do you need?
+                                    input(type="number", id="txt-avior-amount", step="1", class="border border-gray-300 text-gray-900 text-sm rounded focus:ring-0 focus:border-gray-400 block w-full p-3", placeholder="")
+                                    p You Need: 
+                                        span(class="text-green-500 font-medium", id="lbl-usdt-need") 0.00000 USDT (BEP20)
+                                    h1(class="uppercase text-gray-400 text-xs") Need 1 x 24 hours verification
+                                    a(href="javascript:;", id="btn-submit", class="btn bg-purple-500 text-white mt-10 hidden") Submit
+                            button(id="btn-connect", class="btn bg-yellow-500 text-white rounded-full translate-y-0")
+                                span(class="mdi mdi-wallet m-auto") &nbsp;Connect To Wallet
+
+        <script src="js/smooth-scroll.polyfills.min.js"></script>
+
+        <script src="js/gumshoe.polyfills.min.js"></script>
+
+
+        <!-- Custom Javascript -->
+        script(src="js/app.js")
+        script(src="js/jquery.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.7.5/dist/umd/index.min.js")
+        script(src="https://cdn.jsdelivr.net/npm/web3@1.7.1/dist/web3.min.js")
+        script(src="/js/index.js")
