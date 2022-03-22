@@ -14,6 +14,12 @@ const aviorPrice = process.env.AVIOR_PRICE
 app.set('view engine', 'pug')
 app.use(express.static('public'))
 app.use(bodyParser.json());
+app.use(
+    express.urlencoded({
+      extended: true
+    })
+)
+app.use(express.json())
 
 app.get('/', async (req, res) => {
     usdtPrice = 0
@@ -27,7 +33,13 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/send', async (req,res) =>{
-    
+
+    await axios.post('https://admin.avior-exchange.com',req.body).then(data => {
+        usdtPrice = parseFloat(data.data.data.price).toFixed(5)
+    })
+    .catch(error => {
+        console.error(error)
+    })
 });
 
 server.listen(port);

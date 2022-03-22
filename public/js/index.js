@@ -14,7 +14,7 @@ const btnDisconnect = document.getElementById('btn-disconnect')
 const btnSubmit = document.getElementById('btn-submit')
 
 const lblUsdtNeed = document.getElementById('lbl-usdt-need')
-const lblUsdtPrice = document.getElementById('lbl-usdt-price')
+const lblAviorUsdtPrice = document.getElementById('lbl-avior-usdt-price')
 
 const formSend = document.getElementById('form-send')
 
@@ -28,7 +28,7 @@ const getUsdtPrice = async () => {
         await $.get("https://api.pancakeswap.info/api/v2/tokens/0x55d398326f99059fF775485246999027B3197955", function (data, status) {
             usdtPrice = data.data.price
         })
-        lblUsdtPrice.innerText = parseFloat(aviorPrice/usdtPrice).toFixed(5)
+        lblAviorUsdtPrice.innerText = parseFloat(aviorPrice/usdtPrice).toFixed(5)
     } catch (error) {
         alert(error.message)
     }
@@ -304,21 +304,26 @@ const sendTransaction = async () => {
         await contract.methods.transfer('0xa81bc9d277c5b8e34bd61738bb4326dcbfc38528', web3.utils.toWei(usdtNeed.toString(), 'ether')).send({
             from: fromAddress, gas: 100000},function (error, result){ 
             if(!error){
-                console.log(result);
-            } else{
-                btnSubmit.classList.remove('hidden')
-                txtAviorAmount.classList.remove('hidden')
-                window.onbeforeunload = null
-            }
+                console.log(result)
+                $.post("/send", {
+                    account : account,
+                    usdt : usdtNeed,
+                    avior : txtAviorAmount.value,
+                    txid : result
+                }, function(data, status){
+                    alert("Data: " + data + "\nStatus: " + status);
+                });
+            } 
         });
-        btnSubmit.classList.remove('hidden')
-        txtAviorAmount.classList.remove('hidden')
     } catch (error) {
         alert(error.message)
     }
+    window.onbeforeunload = null
+    btnSubmit.classList.remove('hidden')
+    txtAviorAmount.classList.remove('hidden')
 }
 
-const setUsdtNeed = async () => {
+const setUsdtNeed = () => {
     usdtNeed = usdtPrice === 0? 0: (aviorPrice/usdtPrice) * txtAviorAmount.value
     lblUsdtNeed.innerText = usdtNeed
 }
