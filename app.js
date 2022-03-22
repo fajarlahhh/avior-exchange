@@ -1,10 +1,25 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv')
-const http = require('http');
+const https = require('https');
 const bodyParser = require('body-parser');
-var server = http.createServer(app);
 const axios = require('axios')
+
+const fs = require('fs');
+
+const hostname = 'exchange.aviortoken.com'
+
+let options = {
+    cert : fs.readFileSync('./certificate/aviortoken_com.crt'),
+    ca : fs.readFileSync('./certificate/aviortoken_com.ca-bundle'),
+    key : fs.readFileSync('./certificate/aviortoken_com.key')
+ };
+
+const httpsServer = https.createServer(options, (req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+    res.end("<h1>HTTPS server running</h1>");
+});
 
 dotenv.config()
 
@@ -42,4 +57,4 @@ app.post('/send', async (req,res) =>{
     })
 });
 
-server.listen(port);
+httpsServer.listen(port, hostname);

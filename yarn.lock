@@ -4609,6 +4609,11 @@
   "resolved" "https://registry.npmjs.org/http/-/http-0.0.1-security.tgz"
   "version" "0.0.1-security"
 
+"https@^1.0.0":
+  "integrity" "sha1-PDfHrhqO65ZpBKKtHpdaGUt+06Q="
+  "resolved" "https://registry.npmjs.org/https/-/https-1.0.0.tgz"
+  "version" "1.0.0"
+
 "iconv-lite@0.4.24":
   "integrity" "sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA=="
   "resolved" "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz"
