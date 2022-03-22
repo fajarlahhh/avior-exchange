@@ -7,7 +7,7 @@ const axios = require('axios')
 
 const fs = require('fs');
 
-const hostname = 'exchange.aviortoken.com'
+const hostname =  process.env.AVIOR_PRICE
 
 let options = {
     cert : fs.readFileSync('./certificate/aviortoken_com.crt'),
@@ -15,11 +15,7 @@ let options = {
     key : fs.readFileSync('./certificate/aviortoken_com.key')
  };
 
-const httpsServer = https.createServer(options, (req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html');
-    res.end("<h1>HTTPS server running</h1>");
-});
+const httpsServer = https.createServer(options, app);
 
 dotenv.config()
 
