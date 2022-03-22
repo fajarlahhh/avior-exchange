@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const dotenv = require('dotenv')
 const https = require('https');
 const http = require('http');
@@ -14,10 +13,11 @@ let options = {
     cert : fs.readFileSync('./certificate/aviortoken_com.crt'),
     ca : fs.readFileSync('./certificate/aviortoken_com.ca-bundle'),
     key : fs.readFileSync('./certificate/aviortoken_com.key')
- };
+};
 
+const app = express();
 const httpsServer = https.createServer(options, app);
-const httpServer = https.createServer(app);
+const httpServer = http.createServer(app);
 
 app.use((req, res, next) => {
     if(req.protocol === 'http') {
