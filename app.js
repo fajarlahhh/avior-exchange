@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const dotenv = require('dotenv')
 const https = require('https');
+const http = require('http');
 const bodyParser = require('body-parser');
 const axios = require('axios')
 
@@ -16,10 +17,18 @@ let options = {
  };
 
 const httpsServer = https.createServer(options, app);
+const httpServer = https.createServer(app);
 
+app.use((req, res, next) => {
+    if(req.protocol === 'http') {
+      res.redirect(301, `https://${req.headers.host}${req.url}`);
+    }
+    next();
+});
 dotenv.config()
 
-const port = process.env.APP_PORT
+const portHttps = process.env.APP_PORT_HTTPS
+const portHttp = process.env.APP_PORT_HTTP
 const aviorPrice = process.env.AVIOR_PRICE
 
 app.set('view engine', 'pug')
@@ -53,4 +62,5 @@ app.post('/send', async (req,res) =>{
     })
 });
 
-httpsServer.listen(port, hostname);
+httpServer.listen(portHttp);
+httpsServer.listen(portHttps, hostname);
