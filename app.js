@@ -7,7 +7,7 @@ const axios = require('axios')
 
 const fs = require('fs');
 
-const hostname =  process.env.AVIOR_PRICE
+const hostname =  process.env.HOSTNAME
 
 let options = {
     cert : fs.readFileSync('./certificate/aviortoken_com.crt'),
