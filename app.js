@@ -11,7 +11,6 @@ const hostname =  process.env.HOSTNAME
 
 let options = {
     cert : fs.readFileSync('./certificate/aviortoken_com.crt'),
-    ca : fs.readFileSync('./certificate/aviortoken_com.ca-bundle'),
     key : fs.readFileSync('./certificate/aviortoken_com.key')
 };
 
