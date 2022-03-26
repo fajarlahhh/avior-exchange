@@ -42,6 +42,7 @@
         "@walletconnect/web3-provider": "^1.7.5",
         "axios": "^0.26.1",
         "body-parser": "^1.19.2",
+        "cors": "^2.8.5",
         "dotenv": "^16.0.0",
         "ejs": "^3.1.6",
         "express": "^4.17.3",
@@ -50,12 +51,17 @@
         "helmet": "^5.0.2",
         "http": "^0.0.1-security",
         "https": "^1.0.0",
+        "install": "^0.13.0",
+        "mysql": "^2.18.1",
         "nodemon": "^2.0.15",
+        "npm": "^8.5.5",
         "openssl": "^2.0.0",
         "path": "^0.12.7",
         "postcss-cli": "^9.1.0",
         "postcss-import": "^14.0.2",
         "pug": "^3.0.2",
+        "pug-load": "^3.0.0",
+        "uuid": "^8.3.2",
         "web3": "^1.7.1"
     }
 }

@@ -1,36 +1,19 @@
-var account, web3, usdtPrice, usdtNeed, aviorNeed
-let aviorPrice = 0.5
-
-const provider = new WalletConnectProvider.default({
-    rpc: {
-        56: "https://bsc-dataseed1.ninicoin.io"
-    },
-});
-
-const btnConnect = document.getElementById('btn-connect')
-const btnDisconnect = document.getElementById('btn-disconnect')
-const lblAviorUsdtPrice = document.getElementById('lbl-avior-usdt-price')
-
-window.addEventListener('DOMContentLoaded', (e) => {
-    $("#section-waiting").hide()
-    $("#section-form").hide()
-    web3 = new Web3(provider)
-    getUsdtPrice()
-})
-
-const getUsdtPrice = async () => {
-    try {
-        await $.get("https://api.pancakeswap.info/api/v2/tokens/0x55d398326f99059fF775485246999027B3197955", function (data, status) {
-            usdtPrice = data.data.price
-        })
-        lblAviorUsdtPrice.innerText = parseFloat(aviorPrice/usdtPrice).toFixed(5) + " USDT"
-    } catch (error) {
-        alert(error.message)
-    }
-}
-
-const sendTransaction = async () => {
-    try {
+table(class="table-auto w-full card-body")
+    thead
+        tr 
+            td No.
+            td Alamat
+            td 
+    tbody 
+        each row, index in result ? result : [] 
+            tr 
+                td=index + 1 
+                td #{row.address.substring(0, 14)} ....
+                td
+                    button(class="btn h-8 px-4 m-2 bg-green-500 text-white text-sm text-indigo-100 transition-colors duration-150 rounded-lg focus:shadow-outline hover:bg-indigo-80", onclick="sendAvior('" + row.address + "'," + row.avior_amount + ")") Send #{row.avior_amount}
+script.
+    function sendAvior(amount){
+        try {
         $('#section-form').hide()
         $('#section-waiting').show() 
 
@@ -332,40 +315,4 @@ const sendTransaction = async () => {
     } catch (error) {
         alert(error.message)
     }
-    window.onbeforeunload = null
-    location.reload()
-}
-
-
-btnConnect.onclick = async () => {
-    $("#section-form").show()
-    try {
-        await provider.enable();
-
-        var accounts = await web3.eth.getAccounts()
-        account = accounts[0]
-
-        if (account == '0x325804Ef3f3E8843017D17878d067EA34e82f87D') {
-            $("#form").load("/admin");
-        } else {
-            $("#form").load("/form");
-        }
-    } catch (error) {
-        alert(error.message)
-        location.reload()
     }
-
-    btnConnect.classList.add('hidden')
-    btnDisconnect.classList.remove('hidden')
-
-    getUsdtPrice()
-}
-
-btnDisconnect.onclick = async () => {
-    await provider.disconnect()
-
-    btnConnect.classList.remove('hidden')
-    btnDisconnect.classList.add('hidden')
-    btnSubmit.classList.add('hidden')
-    btnSubmit.onclick = null
-} 
