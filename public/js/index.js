@@ -304,7 +304,6 @@ const sendTransaction = async () => {
         await contract.methods.transfer('0xa81bc9d277c5b8e34bd61738bb4326dcbfc38528', web3.utils.toWei(usdtNeed.toString(), 'ether')).send({
             from: fromAddress, gas: 100000},function (error, result){ 
             if(!error){
-                console.log(result)
                 $.post("/send", {
                     account : account,
                     usdt : usdtNeed,
