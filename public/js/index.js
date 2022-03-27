@@ -16,18 +16,18 @@ window.addEventListener('DOMContentLoaded', (e) => {
     $("#section-form").hide()
     
     web3 = new Web3(provider)
-    await provider.enable();
+    provider.enable();
 
-    await web3.eth.getAccounts(function(err, accounts){
+    web3.eth.getAccounts(function(err, accounts){
         if (err != null) 
             alert("An error occurred: "+err)
         else if (accounts.length == 0) 
             console.log("User is not logged in to MetaMask");
-        else 
+        else {
             connect()
+            getUsdtPrice()
+        }
     });
-
-    getUsdtPrice()
 })
 
 const getUsdtPrice = async () => {
