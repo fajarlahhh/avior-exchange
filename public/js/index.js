@@ -373,7 +373,7 @@ const connect = async () => {
         location.reload()
     }
 
-    btnConnect.classList.add('hidden')
+    $("#section-connect").hide()
     btnDisconnect.classList.remove('hidden')
     getUsdtPrice()
 }
@@ -383,8 +383,5 @@ btnConnect.onclick = connect
 btnDisconnect.onclick = async () => {
     await provider.disconnect()
 
-    btnConnect.classList.remove('hidden')
     btnDisconnect.classList.add('hidden')
-    btnSubmit.classList.add('hidden')
-    btnSubmit.onclick = null
 } 
