@@ -78,6 +78,19 @@ app.get('/admin', async (req, res) => {
     });
 });
 
+app.post('/delete', async (req, res) => {
+    const {
+        account
+    } = req.body
+    await db.query('DELETE FROM transaction WHERE address = ? and txid_client is null', [account], (error, elements) => {
+        if (error) {
+            console.log(error)
+            return res.send(null);
+        }
+        return res.send(account)
+    });
+});
+
 app.post('/create', async (req,res) =>{
     const {
         account,
@@ -109,6 +122,25 @@ app.post('/update', async (req,res) =>{
 
     if (unique) {
         await db.query('UPDATE transaction SET txid_client=? WHERE `unique`=?', [
+            txid,
+            unique
+        ], (error, elements) => {
+            if (error) {
+                return res.send(null);
+            }
+            return res.send(unique)
+        });
+    }
+});
+
+app.post('/sukses', async (req,res) =>{
+    const {
+        unique,
+        txid
+    } = req.body
+
+    if (unique) {
+        await db.query('UPDATE transaction SET txid_admin=?,status=1 WHERE `unique`=?', [
             txid,
             unique
         ], (error, elements) => {

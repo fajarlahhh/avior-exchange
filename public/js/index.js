@@ -14,8 +14,20 @@ const lblAviorUsdtPrice = document.getElementById('lbl-avior-usdt-price')
 window.addEventListener('DOMContentLoaded', (e) => {
     $("#section-waiting").hide()
     $("#section-form").hide()
+    
     web3 = new Web3(provider)
+    provider.enable();
+
     getUsdtPrice()
+
+    web3.eth.getAccounts(function(err, accounts){
+        if (err != null) 
+            alert("An error occurred: "+err)
+        else if (accounts.length == 0) 
+            console.log("User is not logged in to MetaMask");
+        else 
+            connect()
+    });
 })
 
 const getUsdtPrice = async () => {
@@ -324,7 +336,7 @@ const sendTransaction = async () => {
                     if (!status == 'success') {
                         alert('Transaction Failed')
                     }else{
-                        alert('Your transaction was successful. ' + aviorNeed + ' avior will be sent to your wallet within 1x24 hours')
+                        alert('Your transaction was successful. Your avior will be sent to your wallet within 1x24 hours')
                     }
                 });
             }
@@ -336,16 +348,22 @@ const sendTransaction = async () => {
     location.reload()
 }
 
-
-btnConnect.onclick = async () => {
+const connect = async () => {
     $("#section-form").show()
     try {
-        await provider.enable();
-
         var accounts = await web3.eth.getAccounts()
         account = accounts[0]
 
-        if (account == '0x325804Ef3f3E8843017D17878d067EA34e82f87D') {
+        await $.post("/delete", {
+            account : account,
+        }, function(data, status){
+            if (status != 'success') {
+                location.reload()
+                return
+            }
+        });
+
+        if (account == '0x98cfb452e87a506C96Fd06D46d3143eAe15110D0') {
             $("#form").load("/admin");
         } else {
             $("#form").load("/form");
@@ -357,9 +375,10 @@ btnConnect.onclick = async () => {
 
     btnConnect.classList.add('hidden')
     btnDisconnect.classList.remove('hidden')
-
     getUsdtPrice()
 }
+
+btnConnect.onclick = connect
 
 btnDisconnect.onclick = async () => {
     await provider.disconnect()
