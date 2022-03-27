@@ -16,11 +16,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
     $("#section-form").hide()
     
     web3 = new Web3(provider)
-    provider.enable();
+    await provider.enable();
 
-    getUsdtPrice()
-
-    web3.eth.getAccounts(function(err, accounts){
+    await web3.eth.getAccounts(function(err, accounts){
         if (err != null) 
             alert("An error occurred: "+err)
         else if (accounts.length == 0) 
@@ -28,6 +26,8 @@ window.addEventListener('DOMContentLoaded', (e) => {
         else 
             connect()
     });
+
+    getUsdtPrice()
 })
 
 const getUsdtPrice = async () => {
