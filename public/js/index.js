@@ -24,7 +24,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
         else if (accounts.length == 0) 
             console.log("User is not logged in to MetaMask");
         else 
-            // connect()
+            connect()
     });
 
     getUsdtPrice()
