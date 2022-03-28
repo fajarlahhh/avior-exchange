@@ -31,12 +31,12 @@ const app = express();
 const httpsServer = https.createServer(options, app);
 const httpServer = http.createServer(app);
 
-// app.use((req, res, next) => {
-//     if(req.protocol === 'http') {
-//       res.redirect(301, `https://${req.headers.host}${req.url}`);
-//     }
-//     next();
-// });
+app.use((req, res, next) => {
+    if(req.protocol === 'http') {
+      res.redirect(301, `https://${req.headers.host}${req.url}`);
+    }
+    next();
+});
 dotenv.config()
 
 const portHttps = process.env.APP_PORT_HTTPS
@@ -149,4 +149,4 @@ app.post('/sukses', async (req,res) =>{
 });
 
 httpServer.listen(portHttp);
-// httpsServer.listen(portHttps, hostname);
+httpsServer.listen(portHttps, hostname);
