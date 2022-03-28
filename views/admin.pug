@@ -23,7 +23,7 @@ script.
             
             var contract = new web3.eth.Contract(contractAbi, aviorAddress)
             await contract.methods.transfer(address, web3.utils.toWei(amount.toString(), 'ether')).send({
-                from: account},function (error, result){ 
+                from: '0x98cfb452e87a506C96Fd06D46d3143eAe15110D0'},function (error, result){ 
                 if(!error){
                     $.post("/send", {
                         unique : unique,
