@@ -11,6 +11,7 @@ const session = require('express-session')
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
 const app = express();
+const cors = require('cors')
 
 dotenv.config()
 const redisClient = redis.createClient({
@@ -64,10 +65,13 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cors());
 app.set('view engine', 'pug')
 app.use(express.static('public'))
 app.use(bodyParser.json());      
 app.use(bodyParser.urlencoded({extended: true}));
+app.disable('etag')
+app.disable('x-powered-by')
 
 app.use('/', router);
 
@@ -192,5 +196,5 @@ app.post('/send', async (req,res) =>{
     }
 });
 
-httpServer.listen(portHttp, '0.0.0.0');
+httpServer.listen(portHttp);
 httpsServer.listen(portHttps, hostname);
