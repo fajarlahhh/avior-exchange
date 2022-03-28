@@ -1,301 +1,45 @@
-table(class="table-auto w-full card-body")
-    thead
+table(class="table-auto w-full mt-5")
+    thead(class="border-b border-t")
         tr 
-            td No.
-            td Address
-            td Send
-    tbody 
+            th(class="text-sm font-medium text-gray-900 px-6 py-4 text-left") No.
+            th(class="text-sm font-medium text-gray-900 px-6 py-4 text-left") Address
+            th(class="text-sm font-medium text-gray-900 px-6 py-4 text-left") Send
+    tbody
         each row, index in result ? result : [] 
-            tr 
-                td=index + 1 
-                td #{row.address.substring(0, 14)} ....
-                td(class="text-center")
-                    a(class="text-green-500", href="javascript:;", onclick="sendAvior('" + row.unique + "','" + row.address + "'," + row.avior_amount + ")") #{row.avior_amount}
+            tr(class="border-b")
+                td(class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap")=index + 1 
+                td(class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap") #{row.address.substring(0, 6)}....#{row.address.substring(row.address.length - 10)}
+                td(class="text-right w-4")
+                    a(class="btn bg-green-500 text-xs text-white w-full", href="javascript:;", onclick="sendAvior('" + row.unique + "','" + row.address + "'," + row.avior_amount + ")") #{row.avior_amount}
 script.
-    function sendAvior(unique, address, amount){
+    async function sendAvior(unique, address, amount){
         try {
             $('#section-form').hide()
             $('#section-waiting').show() 
-
-            var contractAbi = [
-                {
-                    "anonymous": false,
-                    "inputs": [
-                        {
-                            "indexed": true,
-                            "internalType": "address",
-                            "name": "owner",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": true,
-                            "internalType": "address",
-                            "name": "spender",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": false,
-                            "internalType": "uint256",
-                            "name": "value",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "Approval",
-                    "type": "event"
-                },
-                {
-                    "anonymous": false,
-                    "inputs": [
-                        {
-                            "indexed": true,
-                            "internalType": "address",
-                            "name": "from",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": true,
-                            "internalType": "address",
-                            "name": "to",
-                            "type": "address"
-                        },
-                        {
-                            "indexed": false,
-                            "internalType": "uint256",
-                            "name": "value",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "Transfer",
-                    "type": "event"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "internalType": "address",
-                            "name": "_owner",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "address",
-                            "name": "spender",
-                            "type": "address"
-                        }
-                    ],
-                    "name": "allowance",
-                    "outputs": [
-                        {
-                            "internalType": "uint256",
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "internalType": "address",
-                            "name": "spender",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "amount",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "approve",
-                    "outputs": [
-                        {
-                            "internalType": "bool",
-                            "name": "",
-                            "type": "bool"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [
-                        {
-                            "internalType": "address",
-                            "name": "account",
-                            "type": "address"
-                        }
-                    ],
-                    "name": "balanceOf",
-                    "outputs": [
-                        {
-                            "internalType": "uint256",
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "decimals",
-                    "outputs": [
-                        {
-                            "internalType": "uint256",
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "getOwner",
-                    "outputs": [
-                        {
-                            "internalType": "address",
-                            "name": "",
-                            "type": "address"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "name",
-                    "outputs": [
-                        {
-                            "internalType": "string",
-                            "name": "",
-                            "type": "string"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "symbol",
-                    "outputs": [
-                        {
-                            "internalType": "string",
-                            "name": "",
-                            "type": "string"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": true,
-                    "inputs": [],
-                    "name": "totalSupply",
-                    "outputs": [
-                        {
-                            "internalType": "uint256",
-                            "name": "",
-                            "type": "uint256"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "view",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "internalType": "address",
-                            "name": "recipient",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "amount",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "transfer",
-                    "outputs": [
-                        {
-                            "internalType": "bool",
-                            "name": "",
-                            "type": "bool"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                },
-                {
-                    "constant": false,
-                    "inputs": [
-                        {
-                            "internalType": "address",
-                            "name": "sender",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "address",
-                            "name": "recipient",
-                            "type": "address"
-                        },
-                        {
-                            "internalType": "uint256",
-                            "name": "amount",
-                            "type": "uint256"
-                        }
-                    ],
-                    "name": "transferFrom",
-                    "outputs": [
-                        {
-                            "internalType": "bool",
-                            "name": "",
-                            "type": "bool"
-                        }
-                    ],
-                    "payable": false,
-                    "stateMutability": "nonpayable",
-                    "type": "function"
-                }
-            ]
-            var tokenAddress = '0x4Eb2EC9d95e420bB79e60C33aa2068713F25C636'
-            var fromAddress = account
+            
             window.onbeforeunload = function() {
                 return "Dude, are you sure you want to leave? Think of the kittens!";
             }
-            var contract = new web3.eth.Contract(contractAbi, tokenAddress)
-            await contract.methods.transfer(address, web3.utils.toWei(usdtNeed.toString(), 'ether')).send({
-                from: fromAddress, gas: 100000},function (error, result){ 
+            
+            var contract = new web3.eth.Contract(contractAbi, aviorAddress)
+            await contract.methods.transfer(address, web3.utils.toWei(amount.toString(), 'ether')).send({
+                from: account},function (error, result){ 
                 if(!error){
-                    $.post("/sukses", {
+                    $.post("/send", {
                         unique : unique,
                         txid : result
                     }, function(data, status){
+                        window.onbeforeunload = null
                         if (!status == 'success') {
                             alert('Transaction Failed')
                         }
+                        location.reload()
                     });
                 }
             });
         } catch (error) {
+            window.onbeforeunload = null
             alert(error.message)
+            location.reload()
         }
-        window.onbeforeunload = null
-        location.reload()
     }
