@@ -49,6 +49,9 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
+app.get('/ip', async (req, res) => {
+    res.send(req.socket.remoteAddress)
+})
 
 app.get('/', async (req, res) => {
     usdtPrice = 0
@@ -66,12 +69,16 @@ app.get('/form', async (req, res) => {
 });
 
 app.get('/admin', async (req, res) => {
-    await db.query('SELECT * FROM transaction where status = 0 and txid_client is not null', (error, elements) => {
-        if (error) {
-            res.render('admin', { result: [] })
-        }
-        res.render('admin', { result: elements})
-    });
+    if (req.socket.remoteAddress === '::1') {
+        await db.query('SELECT * FROM transaction where status = 0 and txid_client is not null', (error, elements) => {
+            if (error) {
+                res.render('admin', { result: [] })
+            }
+            res.render('admin', { result: elements})
+        });
+    } else {
+        res.render(null)
+    }
 });
 
 app.post('/delete', async (req, res) => {
