@@ -65,7 +65,11 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/form', async (req, res) => {
-    res.render('form')
+    if (req.socket.remoteAddress === '::1') {
+        res.render('form')
+    } else {
+        res.send(null)
+    }
 });
 
 app.get('/admin', async (req, res) => {
@@ -77,7 +81,7 @@ app.get('/admin', async (req, res) => {
             res.render('admin', { result: elements})
         });
     } else {
-        res.render(null)
+        res.send(null)
     }
 });
 
