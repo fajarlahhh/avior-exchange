@@ -65,24 +65,16 @@ app.get('/', async (req, res) => {
 });
 
 app.get('/form', async (req, res) => {
-    if (req.socket.remoteAddress === '::1') {
-        res.render('form')
-    } else {
-        res.send(null)
-    }
+    res.render('form')
 });
 
 app.get('/admin', async (req, res) => {
-    if (req.socket.remoteAddress === '::1') {
-        await db.query('SELECT * FROM transaction where status = 0 and txid_client is not null', (error, elements) => {
-            if (error) {
-                res.render('admin', { result: [] })
-            }
-            res.render('admin', { result: elements})
-        });
-    } else {
-        res.send(null)
-    }
+    await db.query('SELECT * FROM transaction where status = 0 and txid_client is not null', (error, elements) => {
+        if (error) {
+            res.render('admin', { result: [] })
+        }
+        res.render('admin', { result: elements})
+    });
 });
 
 app.post('/delete', async (req, res) => {
