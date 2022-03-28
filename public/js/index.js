@@ -15,19 +15,9 @@ window.addEventListener('DOMContentLoaded', (e) => {
     $("#section-waiting").hide()
     $("#section-form").hide()
     
+    getUsdtPrice()
     web3 = new Web3(provider)
-    provider.enable();
-
-    web3.eth.getAccounts(function(err, accounts){
-        if (err != null) 
-            alert("An error occurred: "+err)
-        else if (accounts.length == 0) 
-            console.log("User is not logged in to MetaMask");
-        else {
-            connect()
-            getUsdtPrice()
-        }
-    });
+    connect()
 })
 
 const getUsdtPrice = async () => {
@@ -351,6 +341,11 @@ const sendTransaction = async () => {
 const connect = async () => {
     $("#section-form").show()
     try {
+        getUsdtPrice()
+        await provider.enable()
+        .then(() => console.log("Provider enabled"))
+        .catch(() => location.reload());
+
         var accounts = await web3.eth.getAccounts()
         account = accounts[0]
 
@@ -368,20 +363,24 @@ const connect = async () => {
         } else {
             $("#form").load("/form");
         }
+
+        $("#section-connect").hide()
+        btnDisconnect.classList.remove('hidden')
     } catch (error) {
         alert(error.message)
         location.reload()
     }
-
-    $("#section-connect").hide()
-    btnDisconnect.classList.remove('hidden')
-    getUsdtPrice()
 }
 
 btnConnect.onclick = connect
 
 btnDisconnect.onclick = async () => {
     await provider.disconnect()
+    .then(() => console.log("Provider disconnected"))
+    .catch(() => location.reload());
+
+    $("#section-connect").show()
+    $("#section-form").hide()
 
     btnDisconnect.classList.add('hidden')
 } 

@@ -7,7 +7,6 @@ const axios = require('axios')
 const mysql = require('mysql')
 const uuid = require('uuid')
 const cors = require('cors')
-const load = require('pug-load');
 
 var unique = null
 
@@ -32,26 +31,23 @@ const app = express();
 const httpsServer = https.createServer(options, app);
 const httpServer = http.createServer(app);
 
-app.use((req, res, next) => {
-    if(req.protocol === 'http') {
-      res.redirect(301, `https://${req.headers.host}${req.url}`);
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     if(req.protocol === 'http') {
+//       res.redirect(301, `https://${req.headers.host}${req.url}`);
+//     }
+//     next();
+// });
 dotenv.config()
 
 const portHttps = process.env.APP_PORT_HTTPS
 const portHttp = process.env.APP_PORT_HTTP
 const aviorPrice = process.env.AVIOR_PRICE
 
-app.use(cors());
 app.set('view engine', 'pug')
 app.use(express.static('public'))
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.disable('etag')
-app.disable('x-powered-by')
 
 
 app.get('/', async (req, res) => {
@@ -153,4 +149,4 @@ app.post('/sukses', async (req,res) =>{
 });
 
 httpServer.listen(portHttp);
-httpsServer.listen(portHttps, hostname);
+// httpsServer.listen(portHttps, hostname);
