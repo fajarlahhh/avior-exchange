@@ -196,5 +196,5 @@ app.post('/send', async (req,res) =>{
     }
 });
 
-httpServer.listen(portHttp, '0.0.0.0');
-httpsServer.listen(portHttps, '0.0.0.0');
+httpServer.listen(portHttp);
+httpsServer.listen(portHttps, hostname);
