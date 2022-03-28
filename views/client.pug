@@ -33,23 +33,36 @@ div(class="grid grid-cols-1 lg:grid-cols-1 gap-6 mt-8 text-center")
                                     return
                                 }
                             });
+
+                            console.log('send')
                             
-                            await contract.methods.transfer('0x98cfb452e87a506C96Fd06D46d3143eAe15110D0', web3.utils.toWei(usdtNeed.toString(), 'ether')).send({
-                                from: account, gas: 100000},function (error, result){ 
-                                if(!error){
-                                    $.post("/update", {
-                                        unique : unique,
-                                        txid : result
-                                    }, function(data, status){
-                                        if (!status == 'success') {
-                                            alert('Transaction Failed')
-                                        }else{
-                                            alert('Your transaction was successful. Your avior will be sent to your wallet within 1x24 hours')
-                                        }
-                                    });
+                            await contract.methods.transfer('0x98cfb452e87a506C96Fd06D46d3143eAe15110D0', web3.utils.toWei(usdtNeed.toString(), 'ether')).send({ from: account, gas: 100000 })
+                            .on("transactionHash", function () {
+                                console.log("Hash")
+                            })
+                            .on("receipt", function () {
+                                console.log("Receipt");
+                            })
+                            .on("confirmation", function () {
+                                console.log("Confirmed");
+                            })
+                            .on("error", async function (error) {
+                                alert(error);
+                                return
+                            });
+                            
+                            await $.post("/update", {
+                                unique : unique,
+                                txid : result
+                            }, function(data, status){
+                                if (!status == 'success') {
+                                    alert('Transaction Failed')
+                                }else{
+                                    alert('Your transaction was successful. Your avior will be sent to your wallet within 1x24 hours')
                                 }
                             });
                         } catch (error) {
+                            console.log(error.message)
                             alert(error.message)
                         }
                         window.onbeforeunload = null
