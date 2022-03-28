@@ -15,7 +15,7 @@ const cors = require('cors')
 
 dotenv.config()
 const redisClient = redis.createClient({
-    host: 'localhost',
+    host: '127.0.0.1',
     port: 6379,
     legacyMode: true
 })
