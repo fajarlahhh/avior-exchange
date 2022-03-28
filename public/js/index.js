@@ -1,5 +1,4 @@
-var account, web3, usdtPrice, usdtNeed, aviorNeed
-let aviorPrice = 0.5
+var account, web3, usdtNeed, aviorNeed
 
 const provider = new WalletConnectProvider.default({
     rpc: {
@@ -14,22 +13,11 @@ const lblAviorUsdtPrice = document.getElementById('lbl-avior-usdt-price')
 window.addEventListener('DOMContentLoaded', (e) => {
     $("#section-waiting").hide()
     $("#section-form").hide()
-    
-    getUsdtPrice()
     web3 = new Web3(provider)
     connect()
+    
+    lblAviorUsdtPrice.innerText = parseFloat(aviorPrice/usdtPrice).toFixed(5) + " USDT"
 })
-
-const getUsdtPrice = async () => {
-    try {
-        await $.get("https://api.pancakeswap.info/api/v2/tokens/0x55d398326f99059fF775485246999027B3197955", function (data, status) {
-            usdtPrice = data.data.price
-        })
-        lblAviorUsdtPrice.innerText = parseFloat(aviorPrice/usdtPrice).toFixed(5) + " USDT"
-    } catch (error) {
-        alert(error.message)
-    }
-}
 
 const sendTransaction = async () => {
     try {
@@ -341,7 +329,8 @@ const sendTransaction = async () => {
 const connect = async () => {
     $("#section-form").show()
     try {
-        getUsdtPrice()
+        lblAviorUsdtPrice.innerText = parseFloat(aviorPrice/usdtPrice).toFixed(5) + " USDT"
+
         await provider.enable()
         .then(() => console.log("Provider enabled"))
         .catch(() => location.reload());
