@@ -68,13 +68,19 @@ app.get('/form', async (req, res) => {
     res.render('form')
 });
 
-app.get('/admin', async (req, res) => {
-    await db.query('SELECT * FROM transaction where status = 0 and txid_client is not null', (error, elements) => {
-        if (error) {
-            res.render('admin', { result: [] })
-        }
-        res.render('admin', { result: elements})
-    });
+app.post('/admin', async (req, res) => {
+    const {
+        account
+    } = req.body
+    if (account == '0x98cfb452e87a506C96Fd06D46d3143eAe15110D0') {
+        await db.query('SELECT * FROM transaction where status = 0 and txid_client is not null', (error, elements) => {
+            if (error) {
+                res.render('admin', { result: [] })
+            }
+            res.render('admin', { result: elements})
+        });
+    }
+    res.send('No access')
 });
 
 app.post('/delete', async (req, res) => {
