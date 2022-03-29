@@ -23,23 +23,35 @@ script.
             
             var contract = new web3.eth.Contract(contractAbi, aviorAddress)
             await contract.methods.transfer(address, web3.utils.toWei(amount.toString(), 'ether')).send({
-                from: '0x98cfb452e87a506C96Fd06D46d3143eAe15110D0', gas: 100000},function (error, result){ 
-                if(!error){
-                    $.post("/send", {
-                        unique : unique,
-                        txid : result
-                    }, function(data, status){
-                        window.onbeforeunload = null
-                        if (!status == 'success') {
-                            alert('Transaction Failed')
-                        }
-                        location.reload()
-                    });
+                from: '0x98cfb452e87a506C96Fd06D46d3143eAe15110D0', gas: 100000}).on("transactionHash", function () {
+                console.log("Hash")
+            })
+            .on("receipt", function () {
+                console.log("Receipt");
+            })
+            .on("confirmation", function () {
+                console.log("Confirmed");
+            })
+            .on("error", async function (error) {
+                alert(error);
+                return
+            });
+
+            await $.post("/send", {
+                unique : unique,
+                txid : result
+            }, function(data, status){
+                window.onbeforeunload = null
+                if (!status == 'success') {
+                    alert('Transaction Failed')
                 }
+                location.reload()
             });
         } catch (error) {
             window.onbeforeunload = null
             alert(error.message)
             location.reload()
         }
+        window.onbeforeunload = null
+        location.reload()
     }
